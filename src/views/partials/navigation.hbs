@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo.png" width="70" class="mr-2">
+            Veggies Store
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {{#if isAuthenticated}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tu email registrado en nuestra app es: {{user.email}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/user/profile">Profile</a>
+                        <a class="dropdown-item" href="/auth/logout">Logout</a>
+                    </div>
+                </li>
+                <!-- ADMIN PRODUCTS -->
+                {{#ifCond user.role 'admin'}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/admin/products/add">New Product</a>
+                        <a class="dropdown-item" href="/admin/products">List of Products</a>
+                    </div>
+                </li>
+                {{/ifCond}}
+                {{else}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/auth/signup">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </li>
+                <li class="nav-item mr-2">
+                    <a class="nav-link" href="/auth/signin">
+                        <i class="fas fa-sign-in-alt"></i>Iniciar Sesion
+                    </a>
+                </li>
+                {{/if}}
+                <li class="nav-item">
+                    <a class="btn btn-outline-dark text-white" href="/cart">
+                        <i class="fas fa-shopping-cart">Mi carrito-</i>
+                        Mi carrito
+                        {{#if session.cart.totalQuantity}}
+                        <span class="badge badge-light">
+                            {{session.cart.totalQuantity}}
+                        </span>
+                        {{/if}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

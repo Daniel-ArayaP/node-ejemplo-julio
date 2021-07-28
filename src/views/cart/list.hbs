@@ -1,0 +1,71 @@
+<div class="container p-4">
+
+    <div class="row">
+        {{#if products}}
+        <div class="col-md-8">
+            <ul class="list-group">
+                {{#each products}}
+                <li class="list-group-item">
+                    <span class="badge badge-primary">{{this.quantity}}</span>
+                    <strong>{{this.item.name}}</strong>
+                    <span class="label label-success">${{this.item.price}}</span>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="/cart/reduce/{{this.item._id}}">Reducir a uno</a>
+                             <a class="dropdown-item" href="/cart/reduce/{{this.item._id}}">Reducir a uno</a>
+                            <a class="dropdown-item" href="/cart/remove/{{this.item._id}}">Borrar todo</a>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+            <form action="/cart/checkout" method="POST" class="card card-body">
+                <div class="form-group">
+                    <input type="text" name="firstname" placeholder="Nombre completo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="number" name="lastname" placeholder="Telefono celular" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" placeholder="Direccion exacta" class="form-control">
+                </div>
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_51HovUuGrsk6YKqSY9QDzjN8NT9UKWOsaVdHBIqxe2cMEs87Ft7h9AL1Wi1AovfFtcjZA5KFcGVjT5yxSAL7gf9C600bI6LwSDM" data-amount="{{fromCentsToDollars totalPrice}}"
+                    data-name="Daniel" data-description="Ejemplo Daniel Araya" data-image="/images/logo.png"
+                    data-locale="auto">
+                    </script>
+            </form>
+ 
+            <div class="card card-body mt-3">
+                <strong>Precio Total: ${{totalPrice}} </strong>
+            </div>
+               <div class="card card-body mt-3">
+                <strong>Iva 13%: ${{totalPrice}} </strong>
+            </div>
+        
+               <div class="card card-body mt-3">
+                <strong>Costo del envio: ${{addCostoEnvio}} </strong>
+            </div>
+        </div>
+        {{else}}
+
+        <div class="col-md-4 offset-md-4">
+            <div class="alert alert-danger alert-dismissible fade show">
+               
+                <p> Ups, No hay productos en el carrito</p>
+                <a href="/" class="btn btn-outline-warning">
+                   Compre algunos productos antes
+                </a>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+
+</div>
